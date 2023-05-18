@@ -1,4 +1,4 @@
-# APCSA-Code-Your-Own
+# APCSA_Code_Your_Own
 Will's final APCSA project
 
 #Members
