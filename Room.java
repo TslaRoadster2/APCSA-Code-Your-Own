@@ -32,6 +32,14 @@ public class Room {
         return "not finished";
     }
 
+    public String[] getDoors(){
+        return doors;
+    }
+
+    public void setDoors(String[] doors){
+        this.doors = doors;
+    }
+
     public String generateDescription(){
         if (doors.length == 1){
             description += "You are in a dark room. You can see no doors other than the one that you entered via.";

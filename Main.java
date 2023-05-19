@@ -32,5 +32,8 @@ public class Main {
                     System.out.println("An unknown error has occured. Please try again.");
             }
         }
+
+        Player player = new Player("north");
+        
     }
 }
