@@ -11,7 +11,7 @@ public class Map {
         Room[][] rooms = new Room[8][8];
         for (int i = 0; i < rooms.length; i++){
             for (int j = 0; j < rooms[i].length; j++){
-                rooms[i][j] = new Room(new String[] {"north", "east", "south", "west"});
+                rooms[i][j] = new Room(new String[] {"north", "east", "south", "west"});//TODO: remove hardcoding
             }
         }
         //TODO: remove doors that don't connect using checkLink
@@ -23,9 +23,9 @@ public class Map {
         return rooms;
     }
 
-    public boolean checkLink(int row1, int column1, int row2, int column2){
-        Room room1 = mapRooms[row1][column1];
-        Room room2 = mapRooms[row2][column2];
+    public boolean checkLink(int row1, int column1, int row2, int column2, Room[][] rooms){
+        Room room1 = rooms[row1][column1];
+        Room room2 = rooms[row2][column2];
 
         boolean room1n = false;
         boolean room1e = false;
