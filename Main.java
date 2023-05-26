@@ -33,6 +33,8 @@ public class Main {
             }
         }
 
+        Map map = new Map();
+        System.out.println(map);
         Player player = new Player("north");
         
     }
