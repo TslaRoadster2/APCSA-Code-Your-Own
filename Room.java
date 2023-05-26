@@ -5,24 +5,24 @@ public class Room {
     private HashMap<Item, String> items;
     private String description;
     private String descriptionAddendum;
-    private String[] doors;
+    private Door[] doors;
 
-    public Room(String[] doors){
+    public Room(Door[] doors){
         this.doors = doors;
     }
 
-    public Room(String[] doors, HashMap<Item, String> items){
+    public Room(Door[] doors, HashMap<Item, String> items){
         this.doors = doors;
         this.items = items;
 
     }
 
-    public Room(String[] doors, String descriptionAddendum){
+    public Room(Door[] doors, String descriptionAddendum){
         this.doors = doors;
         this.descriptionAddendum = descriptionAddendum;
     }
 
-    public Room(String[] doors, HashMap<Item, String> items, String descriptionAddendum){
+    public Room(Door[] doors, HashMap<Item, String> items, String descriptionAddendum){
         this.doors = doors;
         this.items = items;
         this.descriptionAddendum = descriptionAddendum;
@@ -32,11 +32,11 @@ public class Room {
         return "not finished";
     }
 
-    public String[] getDoors(){
+    public Door[] getDoors(){
         return doors;
     }
 
-    public void setDoors(String[] doors){
+    public void setDoors(Door[] doors){
         this.doors = doors;
     }
 
