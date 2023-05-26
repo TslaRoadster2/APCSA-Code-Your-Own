@@ -15,11 +15,57 @@ public class Map {
             }
         }
         //TODO: remove doors that don't connect using checkLink
-        /*for (int i = 0; i < rooms.length - 1; i++){
-            for (int j = 0; j < rooms.length - 1; j++){
-                
+        for (int i = 0; i < rooms.length - 1; i++){
+            for (int j = 0; j < rooms[i].length - 1; j++){
+                if (i == 0){
+                    if (j == 0){
+                        checkLink(i, j, i + 1, j, rooms);
+                        checkLink(i, j, i, j + 1, rooms);
+                    }
+                    else if (j == rooms[i].length){
+                        checkLink(i, j, i + 1, j, rooms);
+                        checkLink(i, j, i, j - 1, rooms);
+                    }
+                    else{
+                        checkLink(i, j, i + 1, j, rooms);
+                        checkLink(i, j, i, j + 1, rooms);
+                        checkLink(i, j, i, j - 1, rooms);
+                    }
+                }
+                else if (i == rooms.length){
+                    if (j == 0){
+                        checkLink(i, j, i - 1, j, rooms);
+                        checkLink(i, j, i, j + 1, rooms);
+                    }
+                    else if (j == rooms[i].length){
+                        checkLink(i, j, i - 1, j, rooms);
+                        checkLink(i, j, i, j + 1, rooms);
+                    }
+                    else{
+                        checkLink(i, j, i - 1, j, rooms);
+                        checkLink(i, j, i, j + 1, rooms);
+                        checkLink(i, j, i, j - 1, rooms);
+                    }
+                }
+                else{
+                    if (j == 0){
+                        checkLink(i, j, i + 1, j, rooms);
+                        checkLink(i, j, i, j + 1, rooms);
+                        checkLink(i, j, i - 1, j, rooms);
+                    }
+                    else if (j == rooms[i].length){
+                        checkLink(i, j, i - 1, j, rooms);
+                        checkLink(i, j, i, j + 1, rooms);
+                        checkLink(i, j, i - 1, j, rooms);
+                    }
+                    else{
+                        checkLink(i, j, i + 1, j, rooms);
+                        checkLink(i, j, i, j + 1, rooms);
+                        checkLink(i, j, i, j - 1, rooms);
+                        checkLink(i, j, i - 1, j, rooms);
+                    }
+                }
             }
-        }*/
         return rooms;
     }
 
