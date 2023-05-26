@@ -11,7 +11,7 @@ public class Map {
         Room[][] rooms = new Room[8][8];
         for (int i = 0; i < rooms.length; i++){
             for (int j = 0; j < rooms[i].length; j++){
-                rooms[i][j] = new Room(new String[] {"north", "east", "south", "west"});//TODO: remove hardcoding
+                rooms[i][j] = new Room(new Door[] {new Door("north", false), new Door("east", false), new Door("south", false), new Door("west", false)});//TODO: remove hardcoding
             }
         }
         //TODO: remove doors that don't connect using checkLink
@@ -85,31 +85,31 @@ public class Map {
         
 
         for (int i = 0; i < room1.getDoors().length; i++){
-            if (room1.getDoors()[i].equals("north")){
+            if (room1.getDoors()[i].getDirection().equals("north")){
                 room1n = true;
             }
-            if (room1.getDoors()[i].equals("east")){
+            if (room1.getDoors()[i].getDirection().equals("east")){
                 room1e = true;
             }
-            if (room1.getDoors()[i].equals("south")){
+            if (room1.getDoors()[i].getDirection().equals("south")){
                 room1s = true;
             }
-            if (room1.getDoors()[i].equals("west")){
+            if (room1.getDoors()[i].getDirection().equals("west")){
                 room1w = true;
             }
         }
 
         for (int i = 0; i < room2.getDoors().length; i++){
-            if (room2.getDoors()[i].equals("north")){
+            if (room2.getDoors()[i].getDirection().equals("north")){
                 room2n = true;
             }
-            if (room2.getDoors()[i].equals("east")){
+            if (room2.getDoors()[i].getDirection().equals("east")){
                 room2e = true;
             }
-            if (room2.getDoors()[i].equals("south")){
+            if (room2.getDoors()[i].getDirection().equals("south")){
                 room2s = true;
             }
-            if (room2.getDoors()[i].equals("west")){
+            if (room2.getDoors()[i].getDirection().equals("west")){
                 room2w = true;
             }
         }
