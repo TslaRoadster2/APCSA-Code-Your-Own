@@ -16,4 +16,8 @@ public class Door {
     public boolean locked(){
         return locked;
     }
+
+    public String toString(){
+        return "Door facing direction " + direction + ". The door lock status is " + locked + ".";
+    }
 }
