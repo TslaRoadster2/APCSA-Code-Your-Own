@@ -37,6 +37,10 @@ public class Room {
         return doors;
     }
 
+    public void removeDoor(int index){
+        doors.remove(index);
+    }
+
     public void setDoors(ArrayList<Door> doors){
         this.doors = doors;
     }
@@ -61,7 +65,13 @@ public class Room {
     }
 
     public String toString(){
-        return "doors: " + doors.toString() + "\nitems: " + items.toString() + "\ndescription: " + description + "\ndescription addendum: " + descriptionAddendum;
+        String returnString = "";
+        for (int i = 0; i < doors.size(); i++){
+            returnString += doors.get(i) + " ";
+        }
+        return returnString;
+        
+        //return "doors: " + doors.toString() + "\nitems: " /*+ items.toString()*/ + "\ndescription: " + description + "\ndescription addendum: " + descriptionAddendum;
 
     }
 
