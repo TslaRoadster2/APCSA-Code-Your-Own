@@ -20,83 +20,88 @@ public class Map {
                 rooms[i][j] = new Room(tempDoors);//TODO: remove hardcoding
             }
         }
-        for (int i = 0; i < rooms.length - 1; i++){
-            for (int j = 0; j < rooms[i].length - 1; j++){
+        for (int row = 0; row < rooms.length - 1; row++){
+            for (int column = 0; column < rooms[row].length - 1; column++){
                 boolean connectedNorth = false;
                 boolean connectedEast = false;
                 boolean connectedSouth = false;
                 boolean connectedWest = false;
-                if (i == 0){
-                    if (j == 0){
-                        connectedSouth = checkLink(i, j, i + 1, j, rooms);
-                        connectedEast = checkLink(i, j, i, j + 1, rooms);
+                if (row == 0){//Top row
+                    if (column == 0){//left-most column
+                        connectedSouth = checkLink(row, column, row + 1, column, rooms);//Directly beneath
+                        connectedEast = checkLink(row, column, row, column + 1, rooms);//Directly to the right
                     }
-                    else if (j == rooms[i].length){
-                        connectedSouth = checkLink(i, j, i + 1, j, rooms);
-                        connectedWest = checkLink(i, j, i, j - 1, rooms);
+                    else if (column == rooms[row].length){//right-most column
+                        connectedSouth = checkLink(row, column, row + 1, column, rooms);//Directly beneath
+                        connectedWest = checkLink(row, column, row, column - 1, rooms);//Directly to the left
                     }
-                    else{
-                        connectedSouth = checkLink(i, j, i + 1, j, rooms);
-                        connectedEast = checkLink(i, j, i, j + 1, rooms);
-                        connectedWest = checkLink(i, j, i, j - 1, rooms);
-                    }
-                }
-                else if (i == rooms.length){
-                    if (j == 0){
-                        connectedNorth = checkLink(i, j, i - 1, j, rooms);
-                        connectedEast = checkLink(i, j, i, j + 1, rooms);
-                    }
-                    else if (j == rooms[i].length){
-                        connectedNorth = checkLink(i, j, i - 1, j, rooms);
-                        connectedWest = checkLink(i, j, i, j - 1, rooms);
-                    }
-                    else{
-                        connectedNorth = checkLink(i, j, i - 1, j, rooms);
-                        connectedEast = checkLink(i, j, i, j + 1, rooms);
-                        connectedWest = checkLink(i, j, i, j - 1, rooms);
+                    else{//intermediate column
+                        connectedSouth = checkLink(row, column, row + 1, column, rooms);//Directly below
+                        connectedEast = checkLink(row, column, row, column + 1, rooms);//Directly to the right
+                        connectedWest = checkLink(row, column, row, column - 1, rooms);//Directly to the left
                     }
                 }
-                else{
-                    if (j == 0){
-                        connectedSouth = checkLink(i, j, i + 1, j, rooms);
-                        connectedEast = checkLink(i, j, i, j + 1, rooms);
-                        connectedNorth = checkLink(i, j, i - 1, j, rooms);
+                else if (row == rooms.length){//Bottom row
+                    if (column == 0){//left-most column
+                        connectedNorth = checkLink(row, column, row - 1, column, rooms);//Directly above
+                        connectedEast = checkLink(row, column, row, column + 1, rooms);//Directly to the right
                     }
-                    else if (j == rooms[i].length){
-                        connectedSouth = checkLink(i, j, i + 1, j, rooms);
-                        connectedWest = checkLink(i, j, i, j - 1, rooms);
-                        connectedNorth = checkLink(i, j, i - 1, j, rooms);
+                    else if (column == rooms[row].length){//right-most column
+                        connectedNorth = checkLink(row, column, row - 1, column, rooms);//Directly above
+                        connectedWest = checkLink(row, column, row, column - 1, rooms);//Directly to the left
                     }
-                    else{
-                        connectedSouth = checkLink(i, j, i + 1, j, rooms);
-                        connectedEast = checkLink(i, j, i, j + 1, rooms);
-                        connectedWest = checkLink(i, j, i, j - 1, rooms);
-                        connectedNorth = checkLink(i, j, i - 1, j, rooms);
+                    else{//intermediate column
+                        connectedNorth = checkLink(row, column, row - 1, column, rooms);//Directly above
+                        connectedEast = checkLink(row, column, row, column + 1, rooms);//Directly to the right
+                        connectedWest = checkLink(row, column, row, column - 1, rooms);//Directly to the left
+                    }
+                }
+                else{//Intermediate row
+                    if (column == 0){//left-most column
+                        connectedSouth = checkLink(row, column, row + 1, column, rooms);//Directly below
+                        connectedEast = checkLink(row, column, row, column + 1, rooms);//Directly to the right
+                        connectedNorth = checkLink(row, column, row - 1, column, rooms);//Directly above
+                    }
+                    else if (column == rooms[row].length){//right-most column
+                        connectedSouth = checkLink(row, column, row + 1, column, rooms);//Directly below
+                        connectedWest = checkLink(row, column, row, column - 1, rooms);//Directly to the left
+                        connectedNorth = checkLink(row, column, row - 1, column, rooms);//Directly above
+                    }
+                    else{//intermediate column
+                        connectedSouth = checkLink(row, column, row + 1, column, rooms);//Directly below
+                        connectedEast = checkLink(row, column, row, column + 1, rooms);//Directly to the right
+                        connectedWest = checkLink(row, column, row, column - 1, rooms);//Directly to the left
+                        connectedNorth = checkLink(row, column, row - 1, column, rooms);//Directly above
                     }
                 }
 
-                if (!connectedNorth){//TODO: Fix incorrect indexes if previous connection removed
-                    rooms[i][j].getDoors().remove(0);
+                int removeIndex = 0;
+
+                if (!connectedNorth){
+                    rooms[row][column].removeDoor(removeIndex);
+                    removeIndex--;
                 }
 
                 if (!connectedEast){
-                    rooms[i][j].getDoors().remove(1);
+                    rooms[row][column].removeDoor(removeIndex + 1);
+                    removeIndex--;
                 }
 
                 if (!connectedSouth){
-                    rooms[i][j].getDoors().remove(2);
+                    rooms[row][column].removeDoor(removeIndex + 2);
+                    removeIndex--;
                 }
                 if (!connectedWest){
-                    rooms[i][j].getDoors().remove(3);
+                    rooms[row][column].removeDoor(removeIndex + 3);
                 }
             }
         }
         return rooms;
     }
 
-    public boolean checkLink(int row1, int column1, int row2, int column2, Room[][] rooms){
-        Room room1 = rooms[row1][column1];
-        Room room2 = rooms[row2][column2];
+    public boolean checkLink(int row1, int column1, int row2, int column2, Room[][] roomList){
+        Room room1 = roomList[row1][column1];
+        Room room2 = roomList[row2][column2];
 
         boolean room1n = false;
         boolean room1e = false;
@@ -140,20 +145,21 @@ public class Map {
         }
 
         if (!(Math.abs(row1-row2) == 1 || Math.abs(column1-column2) == 1)){
-            if (row2 > row1 && column2 - column1 == 0){//room2 is directly below room1
+            if ((row2 > row1) && (column2 - column1 == 0)){//room2 is directly below room1
                 return (room2n && room1s);
             }
-            if (row1 < row2 && column2 - column1 == 0){//room1 is directly below room2
+            else if ((row1 < row2) && (column2 - column1 == 0)){//room1 is directly below room2
                 return (room2s && room1n);
             }
-            if (row2 - row1 == 0 && column2 < column1){//room2 is directly to the left of room1
+            else if ((row2 - row1 == 0) && (column2 < column1)){//room2 is directly to the left of room1
                 return (room2e && room1w);
             }
-            if (row2 - row1 == 0 && column2 > column1){//room2 is directly to the right of room1
+            else if ((row2 - row1 == 0) && (column2 > column1)){//room2 is directly to the right of room1
                 return (room2w && room1e);
             }
             return false;
         }
+
         else{
             return false;
         }
@@ -163,7 +169,8 @@ public class Map {
         String returnString = "";
         for (int i = 0; i < mapRooms.length; i++){
             for (int j = 0; j < mapRooms.length; j++){
-                returnString += mapRooms[i][j] + " ";
+                returnString += "Room at location " + i + "," + j + ": ";
+                returnString += mapRooms[i][j] + "\n\n";
             }
         }
         return returnString;
