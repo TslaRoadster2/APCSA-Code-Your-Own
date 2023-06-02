@@ -29,6 +29,10 @@ public class Map {
                 rooms[i][j] = new Room(tempDoors);
             }
         }
+        return rooms;
+    }
+
+    public Room[][] checkMapLinks(Room[][] rooms){
         for (int row = 0; row < rooms.length; row++){//Check Links
             for (int column = 0; column < rooms[row].length; column++){
                 boolean connectedNorth = false;
@@ -116,12 +120,11 @@ public class Map {
                 }
             }
         }
-
-
         return rooms;
     }
 
-    public boolean checkLink(int row1, int column1, int row2, int column2, Room[][] roomList){
+
+    public boolean checkSingleLink(int row1, int column1, int row2, int column2, Room[][] roomList){
         Room room1 = roomList[row1][column1];
         Room room2 = roomList[row2][column2];
 
@@ -135,35 +138,30 @@ public class Map {
         boolean room2s = false;
         boolean room2w = false;
         
-
-        for (String direction : room1.getDoors().keySet()){
-            if (direction.equals("north")){
-                room1n = true;
-            }
-            if (direction.equals("east")){
-                room1e = true;
-            }
-            if (direction.equals("south")){
-                room1s = true;
-            }
-            if (direction.equals("west")){
-                room1w = true;
-            }
+        if (room1.getDoors().containsKey("north")){
+            room1n = true;
+        }
+        if (room1.getDoors().containsKey("east")){
+            room1e = true;
+        }
+        if (room1.getDoors().containsKey("south")){
+            room1s = true;
+        }
+        if (room1.getDoors().containsKey("west")){
+            room1w = true;
         }
 
-        for (String direction : room2.getDoors().keySet()){
-            if (direction.equals("north")){
-                room2n = true;
-            }
-            if (direction.equals("east")){
-                room2e = true;
-            }
-            if (direction.equals("south")){
-                room2s = true;
-            }
-            if (direction.equals("west")){
-                room2w = true;
-            }
+        if (room2.getDoors().containsKey("north")){
+            room2n = true;
+        }
+        if (room2.getDoors().containsKey("east")){
+            room2e = true;
+        }
+        if (room2.getDoors().containsKey("south")){
+            room2s = true;
+        }
+        if (room2.getDoors().containsKey("west")){
+            room2w = true;
         }
 
         if ((Math.abs(row1-row2) == 1 || Math.abs(column1-column2) == 1)){
@@ -186,12 +184,34 @@ public class Map {
         }
     }
 
+    public Room[][] checkContinuity(Room[][] map){
+        HashMap<String, Door> roomDoors = new HashMap<String, Door>();
+        map[0][0].addDoor(new Door("south"));
+        map[0][0].addDoor(new Door("east"));
+        map[1][0].addDoor(new Door("north"));
+        map[0][1].addDoor(new Door("west"));
+        ArrayList<Room> roomHistory = new ArrayList<Room>();
+        ArrayList<Room> currentRoomTracker = new ArrayList<Room>();
+        currentRoomTracker.add();
+        for (int i = 0; i < map.length; i++){
+            for (int j = 0; j < map[i].length; j++){
+                
+            }
+        }
+    }
+
+     public boolean validateMap(Room[][] map){
+        map = checkMapLinks(map);
+        map = checkContinuity(map);
+        return map;                
+     }
+
     public String toString(){
         String returnString = "";
         for (int i = 0; i < mapRooms.length; i++){
             for (int j = 0; j < mapRooms.length; j++){
                 returnString += "Room at location " + i + "," + j + ": ";
-                returnString += mapRooms[i][j] + "\n\n";
+                returnString += mapRooms[i][j].toString() + "\n\n";
             }
         }
         return returnString;
