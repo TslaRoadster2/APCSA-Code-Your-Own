@@ -6,24 +6,24 @@ public class Room {
     private HashMap<Item, String> items;
     private String description;
     private String descriptionAddendum;
-    private ArrayList<Door> doors;
+    private HashMap<String, Door> doors;
 
-    public Room(ArrayList<Door> doors){
+    public Room(HashMap<String, Door> doors){
         this.doors = doors;
     }
 
-    public Room(ArrayList<Door> doors, HashMap<Item, String> items){
+    public Room(HashMap<String, Door> doors, HashMap<Item, String> items){
         this.doors = doors;
         this.items = items;
 
     }
 
-    public Room(ArrayList<Door> doors, String descriptionAddendum){
+    public Room(HashMap<String, Door> doors, String descriptionAddendum){
         this.doors = doors;
         this.descriptionAddendum = descriptionAddendum;
     }
 
-    public Room(ArrayList<Door> doors, HashMap<Item, String> items, String descriptionAddendum){
+    public Room(HashMap<String, Door> doors, HashMap<Item, String> items, String descriptionAddendum){
         this.doors = doors;
         this.items = items;
         this.descriptionAddendum = descriptionAddendum;
@@ -33,12 +33,12 @@ public class Room {
         return "not finished";
     }
 
-    public ArrayList<Door> getDoors(){
+    public HashMap<String, Door> getDoors(){
         return doors;
     }
 
-    public void removeDoor(int index){
-        doors.remove(index);
+    public void removeDoor(String direction){
+        doors.remove(direction);
     }
 
     public void setDoors(ArrayList<Door> doors){
@@ -66,15 +66,12 @@ public class Room {
 
     public String toString(){
         String returnString = "";
-        for (int i = 0; i < doors.size(); i++){
-            returnString += doors.get(i) + " ";
+        for (String direction : doors.keySet()){
+            returnString += doors.get(direction) + " ";
         }
         return returnString;
         
         //return "doors: " + doors.toString() + "\nitems: " /*+ items.toString()*/ + "\ndescription: " + description + "\ndescription addendum: " + descriptionAddendum;
 
     }
-
-
-
 }
