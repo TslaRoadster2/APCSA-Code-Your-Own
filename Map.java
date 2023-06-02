@@ -1,5 +1,6 @@
 package APCSA.APCSA_Code_Your_Own;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Map {
     private Room[][] mapRooms = new Room[8][8];
@@ -12,15 +13,23 @@ public class Map {
         Room[][] rooms = new Room[8][8];
         for (int i = 0; i < rooms.length; i++){
             for (int j = 0; j < rooms[i].length; j++){
-                ArrayList<Door> tempDoors = new ArrayList<Door>();
-                tempDoors.add(new Door("north", false));
-                tempDoors.add(new Door("east", false));
-                tempDoors.add(new Door("south", false));
-                tempDoors.add(new Door("west", false));
-                rooms[i][j] = new Room(tempDoors);//TODO: remove hardcoding
+                HashMap<String, Door> tempDoors = new HashMap<String, Door>();
+                if ((Utils.randInt(0, 3) != 0)){
+                    tempDoors.put("north", new Door("north", false));
+                }
+                if ((Utils.randInt(0, 3) != 0)){
+                    tempDoors.put("east", new Door("east", false));
+                }
+                if ((Utils.randInt(0, 3) != 0)){
+                    tempDoors.put("south", new Door("south", false));
+                }
+                if ((Utils.randInt(0, 3) != 0)){
+                    tempDoors.put("west", new Door("west", false));
+                }
+                rooms[i][j] = new Room(tempDoors);
             }
         }
-        for (int row = 0; row < rooms.length; row++){
+        for (int row = 0; row < rooms.length; row++){//Check Links
             for (int column = 0; column < rooms[row].length; column++){
                 boolean connectedNorth = false;
                 boolean connectedEast = false;
@@ -78,29 +87,37 @@ public class Map {
                     }
                 }
 
-                int removeIndex = 0;
-
                 // System.out.println("row: " + row + " column: " + column + " north: " + connectedNorth + " south: " + connectedSouth + " east: " + connectedEast + " west: " + connectedWest);
 
                 if (!connectedNorth){
-                    rooms[row][column].removeDoor(removeIndex);
-                    removeIndex--;
+                    rooms[row][column].removeDoor("north");
                 }
 
                 if (!connectedEast){
-                    rooms[row][column].removeDoor(removeIndex + 1);
-                    removeIndex--;
+                    rooms[row][column].removeDoor("east");
                 }
 
                 if (!connectedSouth){
-                    rooms[row][column].removeDoor(removeIndex + 2);
-                    removeIndex--;
+                    rooms[row][column].removeDoor("south");
                 }
                 if (!connectedWest){
-                    rooms[row][column].removeDoor(removeIndex + 3);
+                    rooms[row][column].removeDoor("west");
                 }
             }
         }
+
+        for (int i = 0; i < rooms.length; i++){
+            for (int j = 0; j < rooms.length; j++){
+                if (rooms[i][j].getDoors().size() == 0){
+                    rooms[i][j].setConnection(false);
+                }
+                else{
+                    rooms[i][j].setConnection(true);
+                }
+            }
+        }
+
+
         return rooms;
     }
 
@@ -119,32 +136,32 @@ public class Map {
         boolean room2w = false;
         
 
-        for (int i = 0; i < room1.getDoors().size(); i++){
-            if (room1.getDoors().get(i).getDirection().equals("north")){
+        for (String direction : room1.getDoors().keySet()){
+            if (direction.equals("north")){
                 room1n = true;
             }
-            if (room1.getDoors().get(i).getDirection().equals("east")){
+            if (direction.equals("east")){
                 room1e = true;
             }
-            if (room1.getDoors().get(i).getDirection().equals("south")){
+            if (direction.equals("south")){
                 room1s = true;
             }
-            if (room1.getDoors().get(i).getDirection().equals("west")){
+            if (direction.equals("west")){
                 room1w = true;
             }
         }
 
-        for (int i = 0; i < room2.getDoors().size(); i++){
-            if (room2.getDoors().get(i).getDirection().equals("north")){
+        for (String direction : room2.getDoors().keySet()){
+            if (direction.equals("north")){
                 room2n = true;
             }
-            if (room2.getDoors().get(i).getDirection().equals("east")){
+            if (direction.equals("east")){
                 room2e = true;
             }
-            if (room2.getDoors().get(i).getDirection().equals("south")){
+            if (direction.equals("south")){
                 room2s = true;
             }
-            if (room2.getDoors().get(i).getDirection().equals("west")){
+            if (direction.equals("west")){
                 room2w = true;
             }
         }
