@@ -11,7 +11,7 @@ public class Main {
         System.out.println("MS-DOS Version 5.0");
 
         String input = "";
-        System.out.println("Welcome to DOS! Type \"help\" for commads.");
+        System.out.println("Welcome to DOS! Type \"help\" for commands.");
 
         while (!gameStarted) {
             input = Utils.inputString("C:\\>", new String[] { "help", "dir", "start adventuregame.exe" },
