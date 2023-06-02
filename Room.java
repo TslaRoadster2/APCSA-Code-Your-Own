@@ -7,6 +7,7 @@ public class Room {
     private String description;
     private String descriptionAddendum;
     private HashMap<String, Door> doors;
+    private boolean connected;
 
     public Room(HashMap<String, Door> doors){
         this.doors = doors;
@@ -36,6 +37,10 @@ public class Room {
     public HashMap<String, Door> getDoors(){
         return doors;
     }
+    
+    public boolean isConnected(){
+        return connected;
+    }
 
     public void removeDoor(String direction){
         doors.remove(direction);
@@ -43,6 +48,10 @@ public class Room {
 
     public void setDoors(ArrayList<Door> doors){
         this.doors = doors;
+    }
+
+    public void setConnection(boolean connected){
+        this.connected = connected;
     }
 
     public String generateDescription(){
@@ -69,6 +78,7 @@ public class Room {
         for (String direction : doors.keySet()){
             returnString += doors.get(direction) + " ";
         }
+        returnString += "The room connection status is " + connected;
         return returnString;
         
         //return "doors: " + doors.toString() + "\nitems: " /*+ items.toString()*/ + "\ndescription: " + description + "\ndescription addendum: " + descriptionAddendum;
