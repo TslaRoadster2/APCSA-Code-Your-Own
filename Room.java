@@ -46,8 +46,14 @@ public class Room {
         doors.remove(direction);
     }
 
-    public void setDoors(ArrayList<Door> doors){
+    public void setDoors(HashMap<String, Door> doors){
         this.doors = doors;
+    }
+
+    public void addDoor(Door door){
+        if (!doors.containsKey(door.getDirection())){
+            doors.put(door.getDirection(), new Door(door.getDirection()));
+        }
     }
 
     public void setConnection(boolean connected){
