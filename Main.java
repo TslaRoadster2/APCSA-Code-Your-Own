@@ -36,6 +36,6 @@ public class Main {
         Map map = new Map();
         System.out.println(map.toPrettyString());
         Player player = new Player("north");
-        
+
     }
 }

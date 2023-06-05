@@ -6,39 +6,38 @@ public class Player {
     private String direction;
     private ArrayList<Item> inventory;
 
-    public Player(String direction){
+    public Player(String direction) {
         this.direction = direction;
         this.inventory = new ArrayList<Item>();
     }
 
-    public Player (String direction, ArrayList<Item> initialInventory){
+    public Player(String direction, ArrayList<Item> initialInventory) {
         this.direction = direction;
         this.inventory = initialInventory;
     }
 
-    public void setDirection(String direction){
+    public void setDirection(String direction) {
         this.direction = direction;
     }
 
-    public String getDirection(){
+    public String getDirection() {
         return direction;
     }
 
-    public void addItem(Item item){
+    public void addItem(Item item) {
         inventory.add(item);
     }
 
-    public Item getItem(int index){
+    public Item getItem(int index) {
         return inventory.get(index);
     }
 
-    public ArrayList<Item> getInventory(){
+    public ArrayList<Item> getInventory() {
         return inventory;
     }
 
-    public void removeItem(int index){
+    public void removeItem(int index) {
         inventory.remove(index);
     }
-
 
 }
