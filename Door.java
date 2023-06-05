@@ -4,6 +4,10 @@ public class Door {
     private String direction;
     private boolean locked;
 
+    public Door(String direction){
+        this(direction, false);
+    }
+
     public Door(String direction, boolean locked){
         this.direction = direction;
         this.locked = locked;
