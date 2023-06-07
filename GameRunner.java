@@ -60,7 +60,7 @@ public class GameRunner {
                     player.setRow(player.getRow() - 1);
                 } else {
                     System.out.println(
-                            "\nInvalid choice: cannot move in the desired direction. This may be due to a wall or the edge of the map.");
+                            "\nInvalid choice: Cannot move in the desired direction. This may be due to a wall or the edge of the map. Try checking your map.");
                 }
                 break;
             case "east":
@@ -69,7 +69,7 @@ public class GameRunner {
                     player.setColumn(player.getColumn() + 1);
                 } else {
                     System.out.println(
-                            "\nInvalid choice: cannot move in the desired direction. This may be due to a wall or the edge of the map.");
+                            "\nInvalid choice: Cannot move in the desired direction. This may be due to a wall or the edge of the map. Try checking your map.");
                 }
                 break;
             case "south":
@@ -78,7 +78,7 @@ public class GameRunner {
                     player.setRow(player.getRow() + 1);
                 } else {
                     System.out.println(
-                            "\nInvalid choice: cannot move in the desired direction. This may be due to a wall or the edge of the map.");
+                            "\nInvalid choice: Cannot move in the desired direction. This may be due to a wall or the edge of the map. Try checking your map.");
                 }
                 break;
             case "west":
@@ -87,7 +87,7 @@ public class GameRunner {
                     player.setColumn(player.getColumn() - 1);
                 } else {
                     System.out.println(
-                            "\nInvalid choice: cannot move in the desired direction. This may be due to a wall or the edge of the map.");
+                            "\nInvalid choice: Cannot move in the desired direction. This may be due to a wall or the edge of the map. Try checking your map.");
                 }
                 break;
             default:
