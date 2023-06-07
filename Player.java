@@ -28,7 +28,10 @@ public class Player {
     }
 
     public void addVisited(Room room){
-        visited.add(room);
+        if (!visited.contains(room)){
+            visited.add(room);
+        }
+
     }
 
     public ArrayList<Room> getVisited(){
