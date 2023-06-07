@@ -1,4 +1,5 @@
 package APCSA.APCSA_Code_Your_Own;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -33,9 +34,25 @@ public class Main {
             }
         }
 
+        ArrayList<Item> initialInventory = new ArrayList<Item>();
+        initialInventory.add(new Item(false, "a map of the rooms. You'll fill it in as you go. ", "Map"));
+        Player player = new Player("north", initialInventory);
+        player.setRow(0);
+        player.setColumn(0);
         Map map = new Map();
-        System.out.println(map.toPrettyString());
-        Player player = new Player("north");
+        player.addVisited(map.getRoom(player.getRow(), player.getColumn()));
+        System.out.println(player);
+        System.out.println(map.toPrettyString(player));
+        
 
+        // Map test code
+        while (true){
+            int newRow = Utils.inputInt("new row: ") - 1;
+            int newColumn = Utils.inputInt("new column: ") - 1;
+            player.setRow(newRow);
+            player.setColumn(newColumn);
+            player.addVisited(map.getRoom(player.getRow(), player.getColumn()));
+            System.out.println(map.toPrettyString(player));
+        }
     }
 }
