@@ -19,6 +19,11 @@ public class GameRunner {
 
         String userOption = "none";
         String[] availableOptions = new String[] { "quit", "options", "move", "description", "action" };
+        
+        runGameLoop(player, map, userOption, availableOptions);
+    }
+
+    private static void runGameLoop(Player player, Map map, String userOption, String[] availableOptions) {
         while (!userOption.equals("quit")) {
             userOption = Utils.inputString("Enter your next command. To view a list of options, type \"options\": ",
                     availableOptions, "\nInvalid command. To view a list of options, type \"options\".\n", false);
