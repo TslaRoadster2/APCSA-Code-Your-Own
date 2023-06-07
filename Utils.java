@@ -30,13 +30,16 @@ public class Utils {
     return input;
   }
 
-  public static String inputString(String question, String[] options, String invalidOption) {
+  public static String inputString(String question, String[] options, String invalidOption, boolean caseSensitive) {
     boolean inputContained = false;
     System.out.print(question);
     String input = "";
     input = scanner.nextLine();
+    if (!caseSensitive){
+      input = input.toLowerCase();
+    }
     for (String option : options) {
-      if (input.equals(option)) {
+      if (input.equals(option.toLowerCase())) {
         inputContained = true;
       }
     }
@@ -65,6 +68,21 @@ public class Utils {
     }
   }
 
+  public static int inputInt(String question, int lowLimit, int highLimit) {
+    System.out.print(question);
+    while (true) {
+      try {
+        String input = scanner.nextLine();
+        if (Integer.parseInt(input) < lowLimit || Integer.parseInt(input) > highLimit){
+          throw new Exception("Please enter a valid number.");
+        }
+        return Integer.parseInt(input);
+      } catch (Exception e) {
+        System.out.print("Please enter an integer between " + lowLimit + " and " + highLimit + ": ");
+      }
+    }
+  }
+
   public static double inputDouble(String question) {
     System.out.print(question);
     while (true) {
@@ -75,5 +93,21 @@ public class Utils {
         System.out.print("Please enter a number: ");
       }
     }
+  }
+
+  public static boolean twoDimensionalArrayInBounds(int row1, int column1, int row2, int column2, int outerLength, int innerLength){
+    if (row1 < 0 || column1 < 0 || row2 < 0 || column2 < 0){
+      return false;
+    }
+
+    if (row1 >= outerLength || row2 >= outerLength){
+      return false;
+    }
+
+    if (column1 >= innerLength || column2 >= innerLength){
+      return false;
+    }
+
+    return true;
   }
 }
