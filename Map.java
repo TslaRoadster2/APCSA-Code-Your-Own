@@ -6,12 +6,12 @@ import java.util.HashMap;
 public class Map {
     private Room[][] mapRooms;
 
-    public Map() {
-        mapRooms = generateNewMap();
+    public Map(int mapSize) {
+        mapRooms = generateNewMap(mapSize);
     }
 
-    public Room[][] generateNewMap() {
-        Room[][] rooms = new Room[6][6];
+    public Room[][] generateNewMap(int mapSize) {
+        Room[][] rooms = new Room[mapSize][mapSize];
         for (int i = 0; i < rooms.length; i++) {
             for (int j = 0; j < rooms[i].length; j++) {
                 HashMap<String, Door> tempDoors = new HashMap<String, Door>();
@@ -32,7 +32,7 @@ public class Map {
         }
 
         if (!checkContinuity(rooms)) {
-            rooms = generateNewMap();
+            rooms = generateNewMap(mapSize);
         }
         return rooms;
     }
@@ -115,6 +115,9 @@ public class Map {
     }
 
     public boolean checkSingleLink(int row1, int column1, int row2, int column2, Room[][] roomList) {
+        if (!Utils.twoDimensionalArrayInBounds(row1, column1, row2, column2, roomList.length, roomList[0].length)){
+            return false;
+        }
         Room room1 = roomList[row1][column1];
         Room room2 = roomList[row2][column2];
 
@@ -206,6 +209,10 @@ public class Map {
             }
         }
         return visited.size() == roomList.size();
+    }
+
+    public Room[][] getRooms(){
+        return mapRooms;
     }
 
     public String toString() {
