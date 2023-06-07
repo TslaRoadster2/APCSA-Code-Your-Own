@@ -115,7 +115,7 @@ public class Map {
     }
 
     public boolean checkSingleLink(int row1, int column1, int row2, int column2, Room[][] roomList) {
-        if (!Utils.twoDimensionalArrayInBounds(row1, column1, row2, column2, roomList.length, roomList[0].length)){
+        if (!Utils.twoDimensionalArrayInBounds(row1, column1, row2, column2, roomList.length, roomList[0].length)) {
             return false;
         }
         Room room1 = roomList[row1][column1];
@@ -211,7 +211,7 @@ public class Map {
         return visited.size() == roomList.size();
     }
 
-    public Room[][] getRooms(){
+    public Room[][] getRooms() {
         return mapRooms;
     }
 
@@ -226,7 +226,7 @@ public class Map {
         return returnString;
     }
 
-    public Room getRoom(int row, int column){
+    public Room getRoom(int row, int column) {
         return mapRooms[row][column];
     }
 
@@ -235,54 +235,52 @@ public class Map {
         int playerColumn = player.getColumn();
 
         ArrayList<Room> playerVisitedRooms = new ArrayList<Room>();
-        for (Room room : player.getVisited()){
+        for (Room room : player.getVisited()) {
             playerVisitedRooms.add(room);
         }
 
         String result = "";
 
-        //add top border start
-        for (int i = 0; i < mapRooms.length; i++){
+        // add top border start
+        for (int i = 0; i < mapRooms.length; i++) {
             result += "--------";
         }
         result += "------\n|   ";
-        //add top border end
-        
-        //add top padding start
-        for (int i = 0; i < mapRooms[0].length; i++){
-            result += "        ";            
+        // add top border end
+
+        // add top padding start
+        for (int i = 0; i < mapRooms[0].length; i++) {
+            result += "        ";
         }
         result += " |\n";
-        //add top padding end
+        // add top padding end
 
-        //add rooms start
+        // add rooms start
         for (int i = 0; i < mapRooms.length; i++) {
-            result += "|   ";//side border
+            result += "|   ";// side border
             for (int j = 0; j < mapRooms[i].length; j++) {
-                if (playerVisitedRooms.contains(mapRooms[i][j])){
+                if (playerVisitedRooms.contains(mapRooms[i][j])) {
                     if (mapRooms[i][j].hasNorthDoor()) {
                         result += " -+-    ";
                     } else {
                         result += " ---    ";
                     }
-                }
-                else{
+                } else {
                     result += "        ";
                 }
             }
-            result += " |\n|   ";//side border
+            result += " |\n|   ";// side border
             for (int j = 0; j < mapRooms[i].length; j++) {
-                if (playerVisitedRooms.contains(mapRooms[i][j])){
+                if (playerVisitedRooms.contains(mapRooms[i][j])) {
                     if (mapRooms[i][j].hasWestDoor()) {
                         result += "+";
                     } else {
                         result += "|";
                     }
 
-                    if (i == playerRow && j == playerColumn){
+                    if (i == playerRow && j == playerColumn) {
                         result += " x ";
-                    }
-                    else{
+                    } else {
                         result += "   ";
                     }
 
@@ -291,34 +289,34 @@ public class Map {
                     } else {
                         result += "|   ";
                     }
-                }
-                else result += "        ";
+                } else
+                    result += "        ";
             }
-            result += " |\n|   ";//side border
+            result += " |\n|   ";// side border
             for (int j = 0; j < mapRooms[i].length; j++) {
-                if (playerVisitedRooms.contains(mapRooms[i][j])){
+                if (playerVisitedRooms.contains(mapRooms[i][j])) {
                     if (mapRooms[i][j].hasSouthDoor()) {
                         result += " -+-    ";
                     } else {
                         result += " ---    ";
                     }
-                }
-                else result += "        ";
+                } else
+                    result += "        ";
             }
-            result += " |\n|   ";//sider border
-            for (int j = 0; j < mapRooms[i].length; j++){
+            result += " |\n|   ";// sider border
+            for (int j = 0; j < mapRooms[i].length; j++) {
                 result += "        ";
             }
             result += " |\n";
         }
-        //add rooms end
+        // add rooms end
 
-        //add bottom border start
-        for (int i = 0; i < mapRooms.length; i++){
+        // add bottom border start
+        for (int i = 0; i < mapRooms.length; i++) {
             result += "--------";
         }
         result += "------";
-        //add bottom border end
+        // add bottom border end
 
         return result;
     }

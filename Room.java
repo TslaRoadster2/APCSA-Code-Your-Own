@@ -64,12 +64,12 @@ public class Room {
     public String toString() {
         String returnString = "";
         returnString += "The room contains the following doors:\n";
-        for (Door door: doors.values()){
+        for (Door door : doors.values()) {
             returnString += door.toString() + "\n";
         }
         returnString += "\nThe room contains the following items:\n";
-        for (Item item: items){
-            if (!item.isHidden()){
+        for (Item item : items) {
+            if (!item.isHidden()) {
                 returnString += item.toString() + "\n";
             }
         }

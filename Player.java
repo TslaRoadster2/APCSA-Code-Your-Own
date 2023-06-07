@@ -19,22 +19,22 @@ public class Player {
         this.direction = direction;
     }
 
-    public void setRow(int row){
+    public void setRow(int row) {
         this.currentRow = row;
     }
 
-    public void setColumn(int column){
+    public void setColumn(int column) {
         this.currentColumn = column;
     }
 
-    public void addVisited(Room room){
-        if (!visited.contains(room)){
+    public void addVisited(Room room) {
+        if (!visited.contains(room)) {
             visited.add(room);
         }
 
     }
 
-    public ArrayList<Room> getVisited(){
+    public ArrayList<Room> getVisited() {
         return visited;
     }
 
@@ -58,27 +58,28 @@ public class Player {
         inventory.remove(index);
     }
 
-    public int getRow(){
+    public int getRow() {
         return currentRow;
     }
 
-    public int getColumn(){
+    public int getColumn() {
         return currentColumn;
     }
 
-    public String getLocation(){
-        return "You are facing direction " + direction + ", and are in the room at coordinates (" + currentRow + ", "  + currentColumn + "). ";
+    public String getLocation() {
+        return "You are facing direction " + direction + ", and are in the room at coordinates (" + currentRow + ", "
+                + currentColumn + "). ";
     }
 
-    public String getInventoryString(){
+    public String getInventoryString() {
         String returnString = "Your inventory contains:\n";
-        for (Item item: inventory){
+        for (Item item : inventory) {
             returnString += item + "\n";
         }
         return returnString;
     }
 
-    public String toString(){
+    public String toString() {
         return getLocation() + getInventoryString();
     }
 

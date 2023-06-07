@@ -35,7 +35,7 @@ public class Utils {
     System.out.print(question);
     String input = "";
     input = scanner.nextLine();
-    if (!caseSensitive){
+    if (!caseSensitive) {
       input = input.toLowerCase();
     }
     for (String option : options) {
@@ -73,7 +73,7 @@ public class Utils {
     while (true) {
       try {
         String input = scanner.nextLine();
-        if (Integer.parseInt(input) < lowLimit || Integer.parseInt(input) > highLimit){
+        if (Integer.parseInt(input) < lowLimit || Integer.parseInt(input) > highLimit) {
           throw new Exception("Please enter a valid number.");
         }
         return Integer.parseInt(input);
@@ -95,16 +95,17 @@ public class Utils {
     }
   }
 
-  public static boolean twoDimensionalArrayInBounds(int row1, int column1, int row2, int column2, int outerLength, int innerLength){
-    if (row1 < 0 || column1 < 0 || row2 < 0 || column2 < 0){
+  public static boolean twoDimensionalArrayInBounds(int row1, int column1, int row2, int column2, int outerLength,
+      int innerLength) {
+    if (row1 < 0 || column1 < 0 || row2 < 0 || column2 < 0) {
       return false;
     }
 
-    if (row1 >= outerLength || row2 >= outerLength){
+    if (row1 >= outerLength || row2 >= outerLength) {
       return false;
     }
 
-    if (column1 >= innerLength || column2 >= innerLength){
+    if (column1 >= innerLength || column2 >= innerLength) {
       return false;
     }
 

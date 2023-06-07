@@ -35,6 +35,7 @@ public class Main {
             }
         }
         System.out.println("files loading...loaded");
+
         System.out.println(
                 "\n\n\n~.~.~.  Welcome to Adventure Game by Will Barber! To quit at any time, simply type \"quit\". Follow the instructions on screen to play the game.  ~.~.~.\n\n");
 

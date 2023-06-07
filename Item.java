@@ -6,22 +6,22 @@ public class Item {
     private String ability;
     private String name;
 
-    public Item(boolean hidden, String description, String name){
+    public Item(boolean hidden, String description, String name) {
         this(hidden, description, "none", name);
     }
 
-    public Item(boolean hidden, String description, String ability, String name){
+    public Item(boolean hidden, String description, String ability, String name) {
         this.hidden = hidden;
         this.description = description;
         this.ability = ability;
         this.name = name;
     }
 
-    public boolean isHidden(){
+    public boolean isHidden() {
         return hidden;
     }
 
-    public String toString(){
+    public String toString() {
         return name + ". It is " + description + "Its ability is as follows: " + ability + ".";
     }
 }
