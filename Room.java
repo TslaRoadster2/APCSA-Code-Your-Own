@@ -1,11 +1,11 @@
 package APCSA.APCSA_Code_Your_Own;
 
 import java.util.HashMap;
+import java.util.ArrayList;
 
 public class Room {
-    private HashMap<Item, String> items;
+    private ArrayList<Item> items;
     private String description;
-    private String descriptionAddendum;
     private HashMap<String, Door> doors;
     private boolean connected;
     private int row;
@@ -17,21 +17,10 @@ public class Room {
         this.doors = doors;
     }
 
-    public Room(HashMap<String, Door> doors, HashMap<Item, String> items) {
+    public Room(HashMap<String, Door> doors, ArrayList<Item> items) {
         this.doors = doors;
         this.items = items;
 
-    }
-
-    public Room(HashMap<String, Door> doors, String descriptionAddendum) {
-        this.doors = doors;
-        this.descriptionAddendum = descriptionAddendum;
-    }
-
-    public Room(HashMap<String, Door> doors, HashMap<Item, String> items, String descriptionAddendum) {
-        this.doors = doors;
-        this.items = items;
-        this.descriptionAddendum = descriptionAddendum;
     }
 
     public int getRow() {
@@ -72,45 +61,19 @@ public class Room {
         this.connected = connected;
     }
 
-    public String generateDescription() {
-        /*
-         * if (doors.size() == 1){
-         * description +=
-         * "You are in a dark room. You can see no doors other than the one that you entered via."
-         * ;
-         * }
-         * else if (doors.size() == 2){
-         * description +=
-         * "You are in a dark room. Apart from the door that you entered via, you can see another door in the "
-         * + doors.get(1) + " wall";
-         * }
-         * else if (doors.size() != 0){
-         * description +=
-         * "You are in a dark room. Apart from the door that you entered via, you can see doors in the "
-         * ;
-         * for (int i = 0; i < doors.size() - 1; i++){
-         * description += doors.get(i) + ", ";
-         * }
-         * description += " and " + doors.get(doors.size() - 1) + " walls.";
-         * 
-         * }
-         * return description;
-         */
-        return "not done";
-    }
-
     public String toString() {
         String returnString = "";
-        for (String direction : doors.keySet()) {
-            returnString += doors.get(direction) + " ";
+        returnString += "The room contains the following doors:\n";
+        for (Door door: doors.values()){
+            returnString += door.toString() + "\n";
         }
-        returnString += "The room connection status is " + connected;
+        returnString += "\nThe room contains the following items:\n";
+        for (Item item: items){
+            if (!item.isHidden()){
+                returnString += item.toString() + "\n";
+            }
+        }
         return returnString;
-
-        // return "doors: " + doors.toString() + "\nitems: " /*+ items.toString()*/ +
-        // "\ndescription: " + description + "\ndescription addendum: " +
-        // descriptionAddendum;
-
     }
 
     public boolean hasNorthDoor() {
