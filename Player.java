@@ -10,6 +10,7 @@ public class Player {
     private ArrayList<Room> visited;
     private int currentHealth = 50;
     private int maxHealth = 50;
+    private boolean isDead = false;
 
     public Player(String direction, HashMap<String, Item> initialInventory) {
         this.direction = direction;
@@ -104,7 +105,10 @@ public class Player {
 
     public boolean takeDamage(int damage) {
         currentHealth -= damage;
-        return currentHealth > 0;
+        if (currentHealth > 0){
+            isDead = true;
+        }
+        return isDead;
     }
 
     public void renewHealth() {

@@ -5,6 +5,7 @@ public class NonPlayerCharacter {
     private int currentHealth;
     private int attackDamage;
     private String name;
+    private boolean isDead = false;
 
     public NonPlayerCharacter(int maxHealth, int attackDamage, String name) {
         this.maxHealth = maxHealth;
@@ -23,7 +24,10 @@ public class NonPlayerCharacter {
 
     public boolean takeDamage(int damage) {
         currentHealth -= damage;
-        return currentHealth > 0;
+        if (currentHealth > 0){
+            isDead = true;
+        }
+        return isDead;
     }
 
     public void attackPlayer(Player targetPlayer, int damage) {
