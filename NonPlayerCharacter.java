@@ -46,6 +46,6 @@ public class NonPlayerCharacter {
     }
 
     public String toString() {
-        return name + " with health " + currentHealth + "//" + maxHealth + ".";
+        return name + " with health " + currentHealth + "/" + maxHealth + ".";
     }
 }
