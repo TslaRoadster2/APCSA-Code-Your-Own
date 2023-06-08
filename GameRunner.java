@@ -7,6 +7,8 @@ public class GameRunner {
         System.out.println(
                 "\n\n\n~.~.~.  Welcome to Adventure Game by Will Barber! To quit at any time, simply type \"quit\". Follow the instructions on screen to play the game.  ~.~.~.\n\n");
 
+        //TODO: add check for loading previously-saved game file here
+
         ArrayList<Item> initialInventory = new ArrayList<Item>();
         initialInventory.add(new Item(false, "a map of the rooms. You'll fill it in as you go. ", "Map"));
         Player player = new Player("north", initialInventory);
@@ -18,30 +20,23 @@ public class GameRunner {
         player.addVisited(map.getRoom(player.getRow(), player.getColumn()));
 
         String userOption = "none";
-        String[] availableOptions = new String[] { "quit", "options", "move", "description", "action" };
-        
-        runGameLoop(player, map, userOption, availableOptions);
+        runGameLoop(player, map, userOption);
     }
 
-    private static void runGameLoop(Player player, Map map, String userOption, String[] availableOptions) {
+    private static void runGameLoop(Player player, Map map, String userOption) {
         while (!userOption.equals("quit")) {
-            userOption = Utils.inputString("Enter your next command. To view a list of options, type \"options\": ",
-                    availableOptions, "\nInvalid command. To view a list of options, type \"options\".\n", false);
+            userOption = Utils.inputString("Enter your next command. To view a list of options, type \"options\": ");
             System.out.println();
             switch (userOption) {
                 case "quit":
+                    // TODO: save game files
                     System.out.println("Thanks for playing!");
                     break;
                 case "options":
-                    for (String option : availableOptions) {
-                        System.out.println("\t" + option);
-                    }
-                    System.out.println();
+                    printOptions();
                     break;
                 case "move":
                     movePlayer(player, map);
-                    player.addVisited(map.getRooms()[player.getRow()][player.getColumn()]);
-                    System.out.println();
                     break;
                 case "description":
                     break;
@@ -49,9 +44,17 @@ public class GameRunner {
                     playerAction(player, map);
                     break;
                 default:
-                    System.out.println("An unknown error has occured. Please try again.");
+                    System.out.println("Invalid command. To view a list of options, type \"options\".\n");
             }
         }
+    }
+
+    private static void printOptions() {
+        String[] availableOptions = new String[] { "quit", "options", "move", "description", "action" };
+        for (String option : availableOptions) {
+            System.out.println("\t" + option);
+        }
+        System.out.println();
     }
 
     private static void movePlayer(Player player, Map map) {
@@ -98,6 +101,8 @@ public class GameRunner {
             default:
                 System.out.println("\nAn unknown error has occured. Please try again.");
         }
+        player.addVisited(map.getRooms()[player.getRow()][player.getColumn()]);
+        System.out.println();
     }
 
     private static void playerAction(Player player, Map map) {

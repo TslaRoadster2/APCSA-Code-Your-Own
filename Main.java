@@ -1,7 +1,5 @@
 package APCSA.APCSA_Code_Your_Own;
 
-import java.util.*;
-
 public class Main {
     public static void main(String[] args) {
         for (int i = 0; i < 5; i++) {
@@ -16,8 +14,7 @@ public class Main {
         System.out.println("Welcome to DOS! Type \"help\" for commands.");
 
         while (!gameStarted) {
-            input = Utils.inputString("C:\\>", new String[] { "help", "dir", "start adventuregame.exe" },
-                    "Invalid command. Type \"help\" for help.", false);
+            input = Utils.inputString("C:\\>");
 
             switch (input) {
                 case "help":
@@ -31,7 +28,7 @@ public class Main {
                     gameStarted = true;
                     break;
                 default:
-                    System.out.println("An unknown error has occured. Please try again.");
+                    System.out.println("Invalid command. Type \"help\" for help.");
             }
         }
         System.out.println("files loading...loaded");
