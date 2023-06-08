@@ -1,15 +1,15 @@
 package APCSA.APCSA_Code_Your_Own;
 
-import java.util.ArrayList;
+import java.util.*;
 
 public class Player {
     private String direction;
-    private ArrayList<Item> inventory;
+    private HashMap<String, Item> inventory;
     private int currentRow = 0;
     private int currentColumn = 0;
     private ArrayList<Room> visited;
 
-    public Player(String direction, ArrayList<Item> initialInventory) {
+    public Player(String direction, HashMap<String, Item> initialInventory) {
         this.direction = direction;
         this.inventory = initialInventory;
         this.visited = new ArrayList<Room>();
@@ -42,15 +42,15 @@ public class Player {
         return direction;
     }
 
-    public void addItem(Item item) {
-        inventory.add(item);
+    public void addItem(String name, Item item) {
+        inventory.put(name, item);
     }
 
     public Item getItem(int index) {
         return inventory.get(index);
     }
 
-    public ArrayList<Item> getInventory() {
+    public HashMap<String, Item> getInventory() {
         return inventory;
     }
 
@@ -71,10 +71,19 @@ public class Player {
                 + currentColumn + "). ";
     }
 
+    public boolean inventoryContains(String name){
+        for (String itemName : inventory.keySet()){
+            if (itemName.equals(name)){
+                return true;
+            }
+        }
+        return false;
+    }
+
     public String getInventoryString() {
         String returnString = "Your inventory contains:\n";
-        for (Item item : inventory) {
-            returnString += item + "\n";
+        for (String name : inventory.keySet()) {
+            returnString += "\t" + name + "  -->  " + inventory.get(name) + "\n";
         }
         return returnString;
     }
