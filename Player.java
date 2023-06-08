@@ -8,6 +8,8 @@ public class Player {
     private int currentRow = 0;
     private int currentColumn = 0;
     private ArrayList<Room> visited;
+    private int currentHealth = 50;
+    private int maxHealth = 50;
 
     public Player(String direction, HashMap<String, Item> initialInventory) {
         this.direction = direction;
@@ -71,9 +73,9 @@ public class Player {
                 + currentColumn + "). ";
     }
 
-    public boolean inventoryContains(String name){
-        for (String itemName : inventory.keySet()){
-            if (itemName.equals(name)){
+    public boolean inventoryContains(String name) {
+        for (String itemName : inventory.keySet()) {
+            if (itemName.equals(name)) {
                 return true;
             }
         }
@@ -86,6 +88,34 @@ public class Player {
             returnString += "\t" + name + "  -->  " + inventory.get(name) + "\n";
         }
         return returnString;
+    }
+
+    public void setMaxHealth() {
+        this.maxHealth = maxHealth;
+    }
+
+    public int getCurrentHealth() {
+        return currentHealth;
+    }
+
+    public int getMaxHealth() {
+        return maxHealth;
+    }
+
+    public boolean takeDamage(int damage) {
+        currentHealth -= damage;
+        return currentHealth > 0;
+    }
+
+    public void renewHealth() {
+        currentHealth = maxHealth;
+    }
+
+    public void renewHealth(int health) {
+        currentHealth += health;
+        if (currentHealth > maxHealth) {
+            currentHealth = maxHealth;
+        }
     }
 
     public String toString() {
