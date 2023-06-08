@@ -177,6 +177,6 @@ public class GameRunner {
 
     private static void printPlayerInfo(Player player) {
         System.out.println("\nCurrent Health:");
-        System.out.println("\t" + player.getCurrentHealth() + "\\" + player.getMaxHealth() + "\n");
+        System.out.println("\t" + player.getCurrentHealth() + "/" + player.getMaxHealth() + "\n");
     }
 }
