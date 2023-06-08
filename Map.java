@@ -8,6 +8,7 @@ public class Map {
 
     public Map(int mapSize) {
         mapRooms = generateNewMap(mapSize);
+        mapRooms = addNpcs(mapRooms);
     }
 
     public Room[][] generateNewMap(int mapSize) {
@@ -36,7 +37,7 @@ public class Map {
         }
         return rooms;
     }
-    
+
     public boolean checkContinuity(Room[][] map) {
         map = repairMapLinks(map);
 
@@ -209,6 +210,23 @@ public class Map {
         } else {
             return false;
         }
+    }
+
+    public Room[][] addNpcs(Room[][] rooms){
+        for (int row = 0; row < rooms.length; row++){
+            for (int column = 0; column < rooms[row].length; column++){
+                if (!(row == 0 && column == 0)){
+                    if (Utils.randInt(0, 4) == 0){
+                        rooms[row][column].addNpc(new NonPlayerCharacter(Utils.randInt(1, 5) * 2, Utils.randInt(1, 4), "goblin"));
+                    }
+                    if (Utils.randInt(0, 9) == 0){
+                        rooms[row][column].addNpc(new NonPlayerCharacter(Utils.randInt(2, 10) * 2, Utils.randInt(5, 10), "orc"));
+                    }
+                }
+            }
+        }
+        rooms[Utils.randInt(3, rooms.length - 1)][Utils.randInt(3, rooms[0].length - 1)].addNpc(new NonPlayerCharacter(40, 25, "dragon"));
+        return rooms;
     }
 
 
