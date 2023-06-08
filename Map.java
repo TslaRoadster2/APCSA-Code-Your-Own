@@ -36,6 +36,44 @@ public class Map {
         }
         return rooms;
     }
+    
+    public boolean checkContinuity(Room[][] map) {
+        map = repairMapLinks(map);
+
+        ArrayList<Room> roomList = new ArrayList<Room>();
+        for (int i = 0; i < map.length; i++) {
+            for (int j = 0; j < map[i].length; j++) {
+                roomList.add(map[i][j]);
+            }
+        }
+
+        ArrayList<Room> visited = new ArrayList<Room>();
+        ArrayList<Room> queued = new ArrayList<Room>();
+        queued.add(map[0][0]);
+        while (!queued.isEmpty()) {
+            Room currentRoom = queued.remove(0);
+            visited.add(currentRoom);
+            int currentRow = currentRoom.getRow();
+            int currentColumn = currentRoom.getColumn();
+            if (currentRoom.hasNorthDoor() && !(visited.contains(map[currentRow - 1][currentColumn])
+                    || queued.contains(map[currentRow - 1][currentColumn]))) {
+                queued.add(0, map[currentRow - 1][currentColumn]);
+            }
+            if (currentRoom.hasEastDoor() && !(visited.contains(map[currentRow][currentColumn + 1])
+                    || queued.contains(map[currentRow][currentColumn + 1]))) {
+                queued.add(0, map[currentRow][currentColumn + 1]);
+            }
+            if (currentRoom.hasSouthDoor() && !(visited.contains(map[currentRow + 1][currentColumn])
+                    || queued.contains(map[currentRow + 1][currentColumn]))) {
+                queued.add(0, map[currentRow + 1][currentColumn]);
+            }
+            if (currentRoom.hasWestDoor() && !(visited.contains(map[currentRow][currentColumn - 1])
+                    || queued.contains(map[currentRow][currentColumn - 1]))) {
+                queued.add(0, map[currentRow][currentColumn - 1]);
+            }
+        }
+        return visited.size() == roomList.size();
+    }
 
     public Room[][] repairMapLinks(Room[][] rooms) {
         for (int row = 0; row < rooms.length; row++) {// Check Links
@@ -173,46 +211,13 @@ public class Map {
         }
     }
 
-    public boolean checkContinuity(Room[][] map) {
-        map = repairMapLinks(map);
-
-        ArrayList<Room> roomList = new ArrayList<Room>();
-        for (int i = 0; i < map.length; i++) {
-            for (int j = 0; j < map[i].length; j++) {
-                roomList.add(map[i][j]);
-            }
-        }
-
-        ArrayList<Room> visited = new ArrayList<Room>();
-        ArrayList<Room> queued = new ArrayList<Room>();
-        queued.add(map[0][0]);
-        while (!queued.isEmpty()) {
-            Room currentRoom = queued.remove(0);
-            visited.add(currentRoom);
-            int currentRow = currentRoom.getRow();
-            int currentColumn = currentRoom.getColumn();
-            if (currentRoom.hasNorthDoor() && !(visited.contains(map[currentRow - 1][currentColumn])
-                    || queued.contains(map[currentRow - 1][currentColumn]))) {
-                queued.add(0, map[currentRow - 1][currentColumn]);
-            }
-            if (currentRoom.hasEastDoor() && !(visited.contains(map[currentRow][currentColumn + 1])
-                    || queued.contains(map[currentRow][currentColumn + 1]))) {
-                queued.add(0, map[currentRow][currentColumn + 1]);
-            }
-            if (currentRoom.hasSouthDoor() && !(visited.contains(map[currentRow + 1][currentColumn])
-                    || queued.contains(map[currentRow + 1][currentColumn]))) {
-                queued.add(0, map[currentRow + 1][currentColumn]);
-            }
-            if (currentRoom.hasWestDoor() && !(visited.contains(map[currentRow][currentColumn - 1])
-                    || queued.contains(map[currentRow][currentColumn - 1]))) {
-                queued.add(0, map[currentRow][currentColumn - 1]);
-            }
-        }
-        return visited.size() == roomList.size();
-    }
 
     public Room[][] getRooms() {
         return mapRooms;
+    }
+    
+    public Room getRoom(int row, int column) {
+        return mapRooms[row][column];
     }
 
     public String toString() {
@@ -226,9 +231,6 @@ public class Map {
         return returnString;
     }
 
-    public Room getRoom(int row, int column) {
-        return mapRooms[row][column];
-    }
 
     public String toPrettyString(Player player) {
         int playerRow = player.getRow();
