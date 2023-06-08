@@ -16,16 +16,16 @@ public class Map {
             for (int j = 0; j < rooms[i].length; j++) {
                 HashMap<String, Door> tempDoors = new HashMap<String, Door>();
                 if ((Utils.randInt(0, 3) != 0)) {
-                    tempDoors.put("north", new Door("north", false));
+                    tempDoors.put("north", new Door("north"));
                 }
                 if ((Utils.randInt(0, 3) != 0)) {
-                    tempDoors.put("east", new Door("east", false));
+                    tempDoors.put("east", new Door("east"));
                 }
                 if ((Utils.randInt(0, 3) != 0)) {
-                    tempDoors.put("south", new Door("south", false));
+                    tempDoors.put("south", new Door("south"));
                 }
                 if ((Utils.randInt(0, 3) != 0)) {
-                    tempDoors.put("west", new Door("west", false));
+                    tempDoors.put("west", new Door("west"));
                 }
                 rooms[i][j] = new Room(i, j, tempDoors);
             }
