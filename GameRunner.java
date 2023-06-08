@@ -44,8 +44,11 @@ public class GameRunner {
                 case "action":
                     playerAction(player, map);
                     break;
-                case "view inventory":
+                case "inventory":
                     System.out.println(player.getInventoryString());
+                    break;
+                case "player information":
+                    printPlayerInfo(player);
                     break;
                 default:
                     System.out.println("Invalid command. To view a list of options, type \"options\".\n");
@@ -54,7 +57,8 @@ public class GameRunner {
     }
 
     private static void printCommandOptions() {
-        String[] availableOptions = new String[] { "inventory", "options", "view items", "room description", "action" };
+        String[] availableOptions = new String[] { "quit", "inventory", "player information", "options",
+                "room description", "action" };
         for (String option : availableOptions) {
             System.out.println("\t" + option);
         }
@@ -171,4 +175,8 @@ public class GameRunner {
         System.out.println();
     }
 
+    private static void printPlayerInfo(Player player) {
+        System.out.println("\nCurrent Health:");
+        System.out.println("\t" + player.getCurrentHealth() + "\\" + player.getMaxHealth() + "\n");
+    }
 }
