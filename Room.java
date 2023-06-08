@@ -1,26 +1,19 @@
 package APCSA.APCSA_Code_Your_Own;
 
-import java.util.HashMap;
-import java.util.ArrayList;
+import java.util.*;
 
 public class Room {
-    private ArrayList<Item> items;
-    private String description;
+    private ArrayList<Item> items = new ArrayList<Item>();
     private HashMap<String, Door> doors;
     private boolean connected;
     private int row;
     private int column;
+    private ArrayList<NonPlayerCharacter> npcs = new ArrayList<NonPlayerCharacter>();
 
     public Room(int row, int column, HashMap<String, Door> doors) {
         this.row = row;
         this.column = column;
         this.doors = doors;
-    }
-
-    public Room(HashMap<String, Door> doors, ArrayList<Item> items) {
-        this.doors = doors;
-        this.items = items;
-
     }
 
     public int getRow() {
@@ -31,12 +24,12 @@ public class Room {
         return column;
     }
 
-    public String generateDescription(String playerDirection) {
-        return "not finished";
-    }
-
     public HashMap<String, Door> getDoors() {
         return doors;
+    }
+
+    public ArrayList<NonPlayerCharacter> getNpcs() {
+        return npcs;
     }
 
     public boolean isConnected() {
@@ -61,18 +54,40 @@ public class Room {
         this.connected = connected;
     }
 
+    public void addItem(Item item) {
+        this.items.add(item);
+    }
+
+    public void addNpc(NonPlayerCharacter npc) {
+        this.npcs.add(npc);
+    }
+
     public String toString() {
         String returnString = "";
         returnString += "The room contains the following doors:\n";
         for (Door door : doors.values()) {
-            returnString += door.toString() + "\n";
+            returnString += "\n\t" + door.toString();
         }
+        returnString += "\n";
+
         returnString += "\nThe room contains the following items:\n";
-        for (Item item : items) {
-            if (!item.isHidden()) {
-                returnString += item.toString() + "\n";
+        if (items.isEmpty()) {
+            returnString += "\n\tThe room contains no items.";
+        } else {
+            for (Item item : items) {
+                returnString += "\n\t" + item.toString();
             }
         }
+        returnString += "\n";
+
+        if (!npcs.isEmpty()) {
+            returnString += "\nThe room contains the following enemies:\n";
+            for (NonPlayerCharacter npc : npcs) {
+                returnString += "\n\t" + npc.toString();
+            }
+            returnString += "\n";
+        }
+
         return returnString;
     }
 
