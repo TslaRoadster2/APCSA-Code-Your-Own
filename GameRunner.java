@@ -27,13 +27,13 @@ public class GameRunner {
         }
         System.out.println();
         if (doRestore) {
-            //make rooms match
-            for (Room room : restoredPlayer.getVisited()){
+            // make rooms match
+            for (Room room : restoredPlayer.getVisited()) {
                 int row = room.getRow();
                 int column = room.getColumn();
                 restoredMap.getRooms()[row][column] = room;
             }
-            //Make rooms in map match
+            // Make rooms in map match
             restoredPlayer.removeItem("map");
             restoredPlayer.addItem("map", new MapItem(restoredMap));
 
@@ -59,37 +59,37 @@ public class GameRunner {
     private static void runGameLoop(Player player, Map map) {
         String userOption = "none";
         while (!userOption.equals("quit")) {
-            //if (!map.getRoom(player.getRow(), player.getColumn()).hasNpcs()) {
-                userOption = Utils
-                        .inputString("Enter your next command. To view a list of commands, type \"options\": ");
-                System.out.println();
-                switch (userOption) {
-                    case "quit":
-                        // TODO: save game files
-                        System.out.println("Thanks for playing!");
-                        break;
-                    case "options":
-                        printCommandOptions();
-                        break;
-                    case "room description":
-                        System.out.println(map.getRoom(player.getRow(), player.getColumn()));
-                        break;
-                    case "action":
-                        playerAction(player, map);
-                        break;
-                    case "inventory":
-                        System.out.println(player.getInventoryString());
-                        break;
-                    case "player information":
-                        printPlayerInfo(player);
-                        break;
-                    case "debugMap":
-                        System.out.println(map.toString());
-                    default:
-                        System.out.println("Invalid command. To view a list of options, type \"options\".\n");
-                }
+            // if (!map.getRoom(player.getRow(), player.getColumn()).hasNpcs()) {
+            userOption = Utils
+                    .inputString("Enter your next command. To view a list of commands, type \"options\": ");
+            System.out.println();
+            switch (userOption) {
+                case "quit":
+                    // TODO: save game files
+                    System.out.println("Thanks for playing!");
+                    break;
+                case "options":
+                    printCommandOptions();
+                    break;
+                case "room description":
+                    System.out.println(map.getRoom(player.getRow(), player.getColumn()));
+                    break;
+                case "action":
+                    playerAction(player, map);
+                    break;
+                case "inventory":
+                    System.out.println(player.getInventoryString());
+                    break;
+                case "player information":
+                    printPlayerInfo(player);
+                    break;
+                case "debugMap":
+                    System.out.println(map.toString());
+                default:
+                    System.out.println("Invalid command. To view a list of options, type \"options\".\n");
+            }
             // } else {
-            //     npcEncounter(map, player);
+            // npcEncounter(map, player);
             // }
         }
         player.save();
@@ -221,6 +221,34 @@ public class GameRunner {
     }
 
     private static void npcEncounter(Map map, Player player) {
-        map.getRoom(player.getRow(), player.getColumn()).getNpcs().clear();
+        System.out.println("\nAn enemy is in this room! You can engage in combat or attempt to flee.");
+        System.out.println("\nThe enemies are as follows: ");
+        for (NonPlayerCharacter npc : map.getRoom(player.getRow(), player.getColumn()).getNpcs()){
+            System.out.println("\n\tnpc");
+        }
+        System.out.println();
+        String comabtResponse = Utils.inputString("\nWhat is your action? combat/flee: ", new String[] {"combat", "flee"}, "\nInvalid option. Please enter either \"combat\" or \"flee\": ", false);
+        if (comabtResponse.equals("flee")){
+            if (Utils.randInt(0, 3) != 0){
+                System.out.print("\nFlee attempt successful. ");
+                movePlayer(player, map);             
+            }
+            else{
+                player.takeDamage(5);
+                System.out.println("\nFlee attempt failed. You have lost 5 health points.");
+            }
+        }
+        else{
+            engageCombat(map, player);
+        }
+
+    }
+
+    private static void engageCombat(Map map, Player player) {
+        System.out.println("Pick a weapon: ");
+        // TODO: pick weapon item
+        while (map.getRoom(player.getRow(), player.getColumn()).hasNpcs()) {
+            // TODO: combat loop
+        }
     }
 }
