@@ -2,12 +2,16 @@
 Will's final APCSA project
 
 #Members
-Will Barber
+Will Barber -- responsible for all
 
 #Project Category
 Text-based adventure game
 
-#Basic class design
+#Prerequisites
+Java JDK version 20
+
+
+#Initial Thoughts for Basic Class Design (doesn't necessarily match final class design)
 Room class
 - parameters:
    - Room items
@@ -21,3 +25,7 @@ Item class:
    - hidden/not hidden boolean
    - description
    - Ability
+Map class
+- 2D array of rooms
+- Method to generate new rooms
+- Method to access created rooms
