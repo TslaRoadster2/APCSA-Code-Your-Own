@@ -1,6 +1,8 @@
 package APCSA.APCSA_Code_Your_Own;
 
-public class NonPlayerCharacter {
+import java.io.Serializable;
+
+public class NonPlayerCharacter implements Serializable{
     private int maxHealth;
     private int currentHealth;
     private int attackDamage;
@@ -43,6 +45,10 @@ public class NonPlayerCharacter {
         if (currentHealth > maxHealth) {
             currentHealth = maxHealth;
         }
+    }
+
+    public boolean isDead(){
+        return isDead;
     }
 
     public String toString() {

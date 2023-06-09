@@ -31,7 +31,6 @@ public class Main {
                     System.out.println("Invalid command. Type \"help\" for help.");
             }
         }
-        System.out.println("files loading...loaded");
         GameRunner.runGame();
     }
 }

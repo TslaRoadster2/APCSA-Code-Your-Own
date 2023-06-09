@@ -7,53 +7,93 @@ public class GameRunner {
         System.out.println(
                 "\n\n\n~.~.~.  Welcome to Adventure Game by Will Barber! To quit the game, simply type \"quit\" from the main command screen. Follow the instructions on screen to play the game.  ~.~.~.\n\n");
 
-        // TODO: add check for loading previously-saved game file here
-
-        int mapSize = Utils.inputInt("Enter a map size from 4 to 8: ", 4, 8);
+        System.out.print("files loading...");
+        Player restoredPlayer = Player.restore();
+        Map restoredMap = Map.restore();
+        System.out.println("loaded");
+        boolean doRestore = false;
+        if (restoredPlayer != null && restoredMap != null) {
+            String restoreFile = Utils.inputString("Previous save file detected. Restore file? y/n: ",
+                    new String[] { "y", "n" }, "Please enter \"y\" or \"n\": ", false);
+            if (restoreFile.toLowerCase().equals("y")) {
+                doRestore = true;
+            } else {
+                restoreFile = Utils.inputString("Are you sure? The previous file will be overriden. y/n: ",
+                        new String[] { "y", "n" }, "Please enter \"y\" or \"n\": ", false);
+                if (restoreFile.toLowerCase().equals("n")) {
+                    doRestore = true;
+                }
+            }
+        }
         System.out.println();
-        Map map = new Map(mapSize);
+        if (doRestore) {
+            //make rooms match
+            for (Room room : restoredPlayer.getVisited()){
+                int row = room.getRow();
+                int column = room.getColumn();
+                restoredMap.getRooms()[row][column] = room;
+            }
+            //Make rooms in map match
+            restoredPlayer.removeItem("map");
+            restoredPlayer.addItem("map", new MapItem(restoredMap));
 
-        HashMap<String, Item> initialInventory = new HashMap<String, Item>();
-        initialInventory.put("map", new MapItem(map));
+            runGameLoop(restoredPlayer, restoredMap);
+        } else {
+            int mapSize = Utils.inputInt("Enter a map size from 4 to 8: ", 4, 8);
+            System.out.println();
+            Map map = new Map(mapSize);
 
-        Player player = new Player("north", initialInventory);
-        player.setRow(0);
-        player.setColumn(0);
+            HashMap<String, Item> initialInventory = new HashMap<String, Item>();
+            initialInventory.put("map", new MapItem(map));
 
-        player.addVisited(map.getRoom(player.getRow(), player.getColumn()));
+            Player player = new Player("north", initialInventory);
+            player.setRow(0);
+            player.setColumn(0);
 
-        runGameLoop(player, map);
+            player.addVisited(map.getRoom(player.getRow(), player.getColumn()));
+
+            runGameLoop(player, map);
+        }
     }
 
     private static void runGameLoop(Player player, Map map) {
         String userOption = "none";
         while (!userOption.equals("quit")) {
-            userOption = Utils.inputString("Enter your next command. To view a list of commands, type \"options\": ");
-            System.out.println();
-            switch (userOption) {
-                case "quit":
-                    // TODO: save game files
-                    System.out.println("Thanks for playing!");
-                    break;
-                case "options":
-                    printCommandOptions();
-                    break;
-                case "room description":
-                    System.out.println(map.getRoom(player.getRow(), player.getColumn()));
-                    break;
-                case "action":
-                    playerAction(player, map);
-                    break;
-                case "inventory":
-                    System.out.println(player.getInventoryString());
-                    break;
-                case "player information":
-                    printPlayerInfo(player);
-                    break;
-                default:
-                    System.out.println("Invalid command. To view a list of options, type \"options\".\n");
-            }
+            //if (!map.getRoom(player.getRow(), player.getColumn()).hasNpcs()) {
+                userOption = Utils
+                        .inputString("Enter your next command. To view a list of commands, type \"options\": ");
+                System.out.println();
+                switch (userOption) {
+                    case "quit":
+                        // TODO: save game files
+                        System.out.println("Thanks for playing!");
+                        break;
+                    case "options":
+                        printCommandOptions();
+                        break;
+                    case "room description":
+                        System.out.println(map.getRoom(player.getRow(), player.getColumn()));
+                        break;
+                    case "action":
+                        playerAction(player, map);
+                        break;
+                    case "inventory":
+                        System.out.println(player.getInventoryString());
+                        break;
+                    case "player information":
+                        printPlayerInfo(player);
+                        break;
+                    case "debugMap":
+                        System.out.println(map.toString());
+                    default:
+                        System.out.println("Invalid command. To view a list of options, type \"options\".\n");
+                }
+            // } else {
+            //     npcEncounter(map, player);
+            // }
         }
+        player.save();
+        map.save();
     }
 
     private static void printCommandOptions() {
@@ -109,7 +149,7 @@ public class GameRunner {
             default:
                 System.out.println("\nAn unknown error has occured. Please try again.");
         }
-        player.addVisited(map.getRooms()[player.getRow()][player.getColumn()]);
+        player.addVisited(map.getRoom(player.getRow(), player.getColumn()));
         System.out.println();
     }
 
@@ -178,5 +218,9 @@ public class GameRunner {
     private static void printPlayerInfo(Player player) {
         System.out.println("\nCurrent Health:");
         System.out.println("\t" + player.getCurrentHealth() + "/" + player.getMaxHealth() + "\n");
+    }
+
+    private static void npcEncounter(Map map, Player player) {
+        map.getRoom(player.getRow(), player.getColumn()).getNpcs().clear();
     }
 }

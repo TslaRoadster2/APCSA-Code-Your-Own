@@ -1,6 +1,6 @@
 package APCSA.APCSA_Code_Your_Own;
 
-public class MapItem extends Item {
+public class MapItem extends Item{
     private Map map;
 
     public MapItem(Map map) {

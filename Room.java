@@ -1,8 +1,9 @@
 package APCSA.APCSA_Code_Your_Own;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class Room {
+public class Room implements Serializable{
     private ArrayList<Item> items = new ArrayList<Item>();
     private HashMap<String, Door> doors;
     private boolean connected;
@@ -60,6 +61,17 @@ public class Room {
 
     public void addNpc(NonPlayerCharacter npc) {
         this.npcs.add(npc);
+    }
+
+    public boolean hasNpcs(){
+        if(!npcs.isEmpty()){
+            for (NonPlayerCharacter npc : npcs){
+                if (!npc.isDead()){
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     public String toString() {

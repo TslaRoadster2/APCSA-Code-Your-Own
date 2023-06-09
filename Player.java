@@ -1,8 +1,14 @@
 package APCSA.APCSA_Code_Your_Own;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.*;
 
-public class Player {
+public class Player implements Serializable {
     private String direction;
     private HashMap<String, Item> inventory;
     private int currentRow = 0;
@@ -11,6 +17,8 @@ public class Player {
     private int currentHealth = 50;
     private int maxHealth = 50;
     private boolean isDead = false;
+
+    private static final String fileName = "PlayerState.ser";
 
     public Player(String direction, HashMap<String, Item> initialInventory) {
         this.direction = direction;
@@ -49,16 +57,16 @@ public class Player {
         inventory.put(name, item);
     }
 
-    public Item getItem(int index) {
-        return inventory.get(index);
+    public Item getItem(String name) {
+        return inventory.get(name);
     }
 
     public HashMap<String, Item> getInventory() {
         return inventory;
     }
 
-    public void removeItem(int index) {
-        inventory.remove(index);
+    public void removeItem(String name) {
+        inventory.remove(name);
     }
 
     public int getRow() {
@@ -105,7 +113,7 @@ public class Player {
 
     public boolean takeDamage(int damage) {
         currentHealth -= damage;
-        if (currentHealth > 0){
+        if (currentHealth > 0) {
             isDead = true;
         }
         return isDead;
@@ -124,6 +132,33 @@ public class Player {
 
     public String toString() {
         return getLocation() + getInventoryString();
+    }
+
+    public boolean save() {
+        try {
+            FileOutputStream fileOutputStream = new FileOutputStream(fileName);
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+            objectOutputStream.writeObject(this);
+            objectOutputStream.close();
+            fileOutputStream.close();
+            return true;
+        } catch (IOException exception) {
+            System.err.println(exception);
+            return false;
+        }
+    }
+
+    public static Player restore() {
+        try {
+            FileInputStream fileInputStream = new FileInputStream(fileName);
+            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+            Player player = (Player) objectInputStream.readObject();
+            objectInputStream.close();
+            fileInputStream.close();
+            return player;
+        } catch (Exception exception) { // IOException, ClassNotFoundException
+            return null;
+        }
     }
 
 }

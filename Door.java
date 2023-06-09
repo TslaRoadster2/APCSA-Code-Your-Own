@@ -1,6 +1,8 @@
 package APCSA.APCSA_Code_Your_Own;
 
-public class Door {
+import java.io.Serializable;
+
+public class Door implements Serializable{
     private String direction;
 
     public Door(String direction) {

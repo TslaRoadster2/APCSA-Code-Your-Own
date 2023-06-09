@@ -1,10 +1,18 @@
 package APCSA.APCSA_Code_Your_Own;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Map {
+public class Map implements Serializable {
     private Room[][] mapRooms;
+
+    private static final String fileName = "MapState.ser";
 
     public Map(int mapSize) {
         mapRooms = generateNewMap(mapSize);
@@ -212,28 +220,30 @@ public class Map {
         }
     }
 
-    public Room[][] addNpcs(Room[][] rooms){
-        for (int row = 0; row < rooms.length; row++){
-            for (int column = 0; column < rooms[row].length; column++){
-                if (!(row == 0 && column == 0)){
-                    if (Utils.randInt(0, 4) == 0){
-                        rooms[row][column].addNpc(new NonPlayerCharacter(Utils.randInt(1, 5) * 2, Utils.randInt(1, 4), "goblin"));
+    public Room[][] addNpcs(Room[][] rooms) {
+        for (int row = 0; row < rooms.length; row++) {
+            for (int column = 0; column < rooms[row].length; column++) {
+                if (!(row == 0 && column == 0)) {
+                    if (Utils.randInt(0, 4) == 0) {
+                        rooms[row][column]
+                                .addNpc(new NonPlayerCharacter(Utils.randInt(1, 5) * 2, Utils.randInt(1, 4), "goblin"));
                     }
-                    if (Utils.randInt(0, 9) == 0){
-                        rooms[row][column].addNpc(new NonPlayerCharacter(Utils.randInt(2, 10) * 2, Utils.randInt(5, 10), "orc"));
+                    if (Utils.randInt(0, 9) == 0) {
+                        rooms[row][column]
+                                .addNpc(new NonPlayerCharacter(Utils.randInt(2, 10) * 2, Utils.randInt(5, 10), "orc"));
                     }
                 }
             }
         }
-        rooms[Utils.randInt(3, rooms.length - 1)][Utils.randInt(3, rooms[0].length - 1)].addNpc(new NonPlayerCharacter(40, 25, "dragon"));
+        rooms[Utils.randInt(3, rooms.length - 1)][Utils.randInt(3, rooms[0].length - 1)]
+                .addNpc(new NonPlayerCharacter(40, 25, "dragon"));
         return rooms;
     }
-
 
     public Room[][] getRooms() {
         return mapRooms;
     }
-    
+
     public Room getRoom(int row, int column) {
         return mapRooms[row][column];
     }
@@ -248,7 +258,6 @@ public class Map {
         }
         return returnString;
     }
-
 
     public String toPrettyString(Player player) {
         int playerRow = player.getRow();
@@ -339,5 +348,32 @@ public class Map {
         // add bottom border end
 
         return result;
+    }
+
+    public boolean save() {
+        try {
+            FileOutputStream fileOutputStream = new FileOutputStream(fileName);
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+            objectOutputStream.writeObject(this);
+            objectOutputStream.close();
+            fileOutputStream.close();
+            return true;
+        } catch (IOException exception) {
+            System.err.println(exception);
+            return false;
+        }
+    }
+
+    public static Map restore() {
+        try {
+            FileInputStream fileInputStream = new FileInputStream(fileName);
+            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+            Map map = (Map) objectInputStream.readObject();
+            objectInputStream.close();
+            fileInputStream.close();
+            return map;
+        } catch (Exception exception) { // IOException, ClassNotFoundException
+            return null;
+        }
     }
 }

@@ -1,6 +1,8 @@
 package APCSA.APCSA_Code_Your_Own;
 
-public class Item {
+import java.io.Serializable;
+
+public class Item implements Serializable{
     private String description;
     private String[] abilities;
 
